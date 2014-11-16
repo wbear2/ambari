@@ -1,0 +1,79 @@
+{
+  "href" : "http://dev01.hortonworks.com:8080/api/v1/clusters/c1/hosts?fields=Hosts/host_name,Hosts/public_host_name,Hosts/disk_info,Hosts/cpu_count,Hosts/total_mem,Hosts/host_status,Hosts/last_heartbeat_time,Hosts/os_arch,Hosts/os_type,Hosts/ip,host_components,metrics/disk,metrics/load/load_one",
+  "items" : [
+    {
+      "href" : "http://dev01.hortonworks.com:8080/api/v1/clusters/c1/hosts/dev01.hortonworks.com",
+      "Hosts" : {
+        "cluster_name" : "c1",
+        "cpu_count" : 1,
+        "disk_info" : [
+          {
+            "available" : "46389672",
+            "used" : "4692332",
+            "percent" : "10%",
+            "size" : "51606140",
+            "type" : "ext4",
+            "mountpoint" : "/"
+          },
+          {
+            "available" : "1027192",
+            "used" : "272",
+            "percent" : "1%",
+            "size" : "1027464",
+            "type" : "tmpfs",
+            "mountpoint" : "/dev/shm"
+          },
+          {
+            "available" : "409107",
+            "used" : "61137",
+            "percent" : "14%",
+            "size" : "495844",
+            "type" : "ext4",
+            "mountpoint" : "/boot"
+          },
+          {
+            "available" : "44459296",
+            "used" : "184796",
+            "percent" : "1%",
+            "size" : "47033288",
+            "type" : "ext4",
+            "mountpoint" : "/home"
+          },
+          {
+            "available" : "29882200",
+            "used" : "457830724",
+            "percent" : "94%",
+            "size" : "487712924",
+            "type" : "vboxsf",
+            "mountpoint" : "/media/sf_ambari"
+          }
+        ],
+        "host_name" : "dev01.hortonworks.com",
+        "host_status" : "HEALTHY",
+        "ip" : "10.0.2.15",
+        "last_heartbeat_time" : 1375309885919,
+        "os_arch" : "x86_64",
+        "os_type" : "centos6",
+        "public_host_name" : "dev01.hortonworks.com",
+        "maintenance_state" : "OFF",
+        "total_mem" : 2055208
+      },
+      "metrics" : {
+        "disk" : {
+          "disk_free" : 91.23,
+          "disk_total" : 101.515
+        },
+        "load" : {
+          "load_one" : 1.51880555556
+        }
+      },
+      "alerts" : {
+        "summary" : {
+          "CRITICAL" : 9,
+          "OK" : 5,
+          "WARNING" : 2
+        }
+      }
+    }
+  ]
+}

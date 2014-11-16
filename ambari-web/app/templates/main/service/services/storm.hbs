@@ -1,0 +1,75 @@
+{{!
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+}}
+
+{{view view.parentView.sumMasterComponentView}}
+<tr>
+  <td>
+    <a href="#" {{action filterHosts view.superVisorComponents.[0]}}>
+      {{t dashboard.services.storm.supervisors}}
+    </a>
+  </td>
+  <td>
+    <span>
+      {{#view App.ComponentLiveTextView liveComponentsBinding="view.superVisorsLive" totalComponentsBinding="view.superVisorsTotal"}}
+        {{view.liveComponents}}/{{view.totalComponents}}
+      {{/view}}
+    </span> {{t services.service.summary.SupervisorsLIVE}}
+  </td>
+</tr>
+<tr>
+  <td>
+    {{t services.service.summary.storm.freeslots}}
+  </td>
+  <td>
+    {{formatNull view.service.freeSlots}} / {{formatNull view.service.totalSlots}} ({{formatNull view.freeSlotsPercentage empty="0"}}% {{t common.free}})
+  </td>
+</tr>
+<tr>
+  <td>
+    {{t services.service.summary.storm.tasks}}
+  </td>
+  <td>
+    {{formatNull view.service.totalTasks}}
+  </td>
+</tr>
+<tr>
+  <td>
+    {{t services.service.summary.storm.executors}}
+  </td>
+  <td>
+    {{formatNull view.service.totalExecutors}}
+  </td>
+</tr>
+<tr>
+  <td>
+    {{t services.service.summary.storm.topologies}}
+  </td>
+  <td>
+    {{formatNull view.service.topologies}}
+  </td>
+</tr>
+<tr>
+  <td>
+    {{t services.service.summary.storm.nimbus.uptime}}
+  </td>
+  <td>
+    {{view.nimbusUptimeFormatted}}
+  </td>
+</tr>
+
+

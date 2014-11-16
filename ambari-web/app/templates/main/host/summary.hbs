@@ -1,0 +1,149 @@
+{{!
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+}}
+
+<div class="row-fluid host-block">
+  <div class="span12">
+    <div class="span6">
+      {{!components}}
+      <div class="box">
+        <div class="box-header">
+          <div class="pull-left">
+            <h4>{{t common.components}}</h4>
+          </div>
+          <div class="pull-right span5 row-fluid" style="padding:0 10px;">
+            {{#if App.isAdmin}}
+              <div class="btn-group pull-right">
+                <button id="add_component" data-toggle="dropdown" {{bindAttr class="view.addComponentDisabled:disabled :btn :dropdown-toggle"}}>
+                  <span class="icon-plus"></span>&nbsp;{{t add}}
+                </button>
+                <ul class="dropdown-menu">
+                  {{#each component in view.addableComponents}}
+                    <li>
+                      <a href="javascript:void(null)" data-toggle="modal" {{action addComponent component target="controller"}}>
+                        {{component.displayName}}
+                      </a>
+                    </li>
+                  {{/each}}
+                </ul>
+              </div>
+            {{/if}}
+          </div>
+        </div>
+        <div class="host-components">
+        {{#if view.sortedComponents.length}}
+
+          {{#if App.isAdmin}}
+            {{#if view.content.componentsWithStaleConfigsCount}}
+              <div class="alert alert-warning clearfix">
+                <i class="icon-refresh"></i> {{view.needToRestartMessage}}
+                  <button {{bindAttr class=":btn :restart-components :pull-right :btn-warning"}} {{action restartAllStaleConfigComponents target="controller"}}>
+                    {{t hosts.host.details.needToRestart.button}}
+                  </button>
+              </div>
+            {{/if}}
+          {{/if}}
+
+          {{#each component in view.sortedComponents}}
+            <div class="row-fluid">
+              {{view component.view contentBinding="component"}}
+            </div>
+          {{/each}}
+        {{/if}}
+          {{!clients and add component button}}
+          <div class="clients row-fluid">
+            <div class="span7 row">
+              {{#if view.clients.length}}
+                  <div class="span3 align-right">{{t common.clients}}&nbsp;/</div>
+                  <div class="span7">
+                    {{#each component in view.clients}}
+                      {{component.displayName}}
+                      {{#if component.staleConfigs}}
+                        <span class="text-warning icon-refresh"></span>
+                      {{/if}}
+                      {{#if component.service.isInPassive}}
+                        <span class="icon-medkit"></span>
+                      {{/if}}
+                      {{#unless component.isLast}},{{/unless}}
+                    {{/each}}
+                </div>
+              {{/if}}
+            </div>
+            <div class="span5 row">
+              {{#if App.isAdmin}}
+                {{#if view.clients.length}}
+                  <div class="btn-group pull-right">
+                    <button id="add_component" data-toggle="dropdown" {{bindAttr class=":btn :dropdown-toggle controller.content.isNotHeartBeating:disabled"}}>
+                      {{t common.installed}}
+                      <span class="caret pull-right"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a href="javascript:void(null)" {{bindAttr class="view.areClientWithStaleConfigs::disabled"}} data-toggle="modal" {{action refreshConfigs view.clients target="controller"}}>
+                          {{t hosts.host.details.refreshConfigs}}
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                {{/if}}
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="host-configuration">
+            <div class="box">
+                <div class="box-header">
+                    <h4>{{t hosts.host.summary.header}}</h4>
+                </div>
+                <div class="host-summary-content">
+                    <dl class="dl-horizontal">
+                        <dt>{{t hosts.host.summary.hostname}}:</dt><dd>&nbsp;{{view.content.publicHostName}}</dd>
+                        <dt>{{t common.ipAddress}}:</dt><dd>&nbsp;{{view.content.ip}}</dd>
+                        <dt>{{t common.os}}:</dt><dd>&nbsp;{{view.content.osType}}&nbsp;({{view.content.osArch}})</dd>
+                        <dt>{{t common.cores}}:</dt><dd>&nbsp;{{view.content.coresFormatted}}</dd>
+                        <dt>{{t common.disk}}:</dt><dd>&nbsp;{{view.content.diskInfoBar}}</dd>
+                        <dt>{{t common.memory}}:</dt><dd>&nbsp;{{view.content.memoryFormatted}}</dd>
+                        <dt>{{t common.loadAvg}}:</dt><dd>&nbsp;{{view.content.loadAvg}}</dd>
+                        <dt>{{t hosts.host.summary.agentHeartbeat}}:</dt><dd>{{view.timeSinceHeartBeat}}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+  {{!metrics}}
+   <div class="span6">
+      <div class="box">
+        <div class="box-header">
+          <h4>{{t hosts.host.summary.hostMetrics}}</h4>
+          {{#if App.router.clusterController.isGangliaInstalled}}
+            <div class="btn-group">
+              {{#if App.router.clusterController.isGangliaUrlLoaded}}
+                <a class="btn" rel="tooltip" title="Go to Ganglia" {{action "showGangliaCharts" target="view"}}><i class="icon-link"></i></a>
+              {{else}}
+                <div class="spinner"></div>
+              {{/if}}
+            </div>
+          {{/if}}
+        </div>
+        <div>
+         {{view App.MainHostMetricsView contentBinding="view.content"}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

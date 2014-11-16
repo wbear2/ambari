@@ -1,0 +1,71 @@
+{{!
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+}}
+
+<div id="main">
+  <div id="top-nav">
+    <div class="navbar navbar-static-top">
+      <div class="navbar-inner">
+        <div class="container main-container">
+          <a {{translateAttr href="topnav.logo.href"}} class="logo" target="_blank"><img src="/img/logo-white.png" alt="Apache Ambari" title="Apache Ambari"></a>
+          <a class="brand" {{translateAttr href="topnav.logo.href"}} target="_blank" title="Apache Ambari">{{t app.name}}</a>
+
+          {{#if isClusterDataLoaded}}
+            <a class="brand cluster-name" href="javascript:void(null);" {{bindAttr title="clusterName"}}>
+              <span {{action "showPopup" target="App.router.backgroundOperationsController"}} >{{clusterDisplayName}} </span>
+                {{#with App.router.backgroundOperationsController}}
+                  {{#if allOperationsCount}}
+                      <i class="icon-caret-left ops-count"></i><span class="label operations-count" {{action "showPopup" target="App.router.backgroundOperationsController"}}> {{allOperationsCount}} {{t ops}}</span>
+                  {{else}}
+                      <i class="icon-caret-left"></i><span class="label" {{action "showPopup" target="App.router.backgroundOperationsController"}}>{{allOperationsCount}} {{t ops}}</span>
+                  {{/if}}
+                {{/with}}
+            </a>
+          {{/if}}
+
+          {{#if App.router.loggedIn}}
+            <div class="top-nav-user btn-group">
+              <button class="btn dropdown-toggle"  data-toggle="dropdown">
+                  <i class="icon-user"></i>&nbsp;{{App.router.loginName}}&nbsp;<span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                  <li><a href="" {{action showAboutPopup target="controller"}}>{{t app.aboutAmbari}}</a></li>
+                {{#if isClusterDataLoaded}}
+                  {{#if App.isAdmin}}
+                      <li><a href="" {{action showSettingsPopup target="controller"}}>{{t app.settings}}</a></li>
+                  {{/if}}
+                {{/if}}
+                  <li class="break"></li>
+                  <li><a href="" {{action logoff}}>{{t app.signout}}</a></li>
+              </ul>
+            </div>
+          {{/if}}
+
+          {{view App.MainMenuView}}
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container main-container">
+    <div id="content">
+      {{outlet}}
+    </div>
+  </div>
+</div>
+
+

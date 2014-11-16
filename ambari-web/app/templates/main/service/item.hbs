@@ -1,0 +1,96 @@
+{{!
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+}}
+
+{{view App.MainServiceInfoMenuView configTabBinding="view.hasConfigTab"}}
+  <div class="span3 quick-links-wrapper">
+    {{#if view.service.quickLinks.length}}
+      {{#view App.QuickViewLinks contentBinding="view.service"}}
+        <ul class="nav nav-pills move">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{t common.quickLinks}}<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              {{#if view.isLoaded}}
+                {{#if view.quickLinksArray}}
+                  <!--there are multiple masters eg, HBase multiple masters or HDFS HA enabled-->
+                  {{#each quickLinks in view.quickLinksArray}}
+                    <li class="dropdown-submenu">
+                      <a href="javascript:void(null)">{{quickLinks.publicHostNameLabel}} &nbsp;</a>
+                      <ul class="dropdown-menu">
+                        {{#each quickLinks}}
+                          <li><a {{bindAttr href="url"}} {{bindAttr target="view.linkTarget"}}>{{label}}</a></li>
+                        {{/each}}
+                      </ul>
+                    </li>
+                  {{/each}}
+                {{else}}
+                  {{#each view.quickLinks}}
+                    <li><a {{bindAttr href="url"}} {{bindAttr target="view.linkTarget"}}>{{label}}</a></li>
+                  {{/each}}
+                {{/if}}
+              {{else}}
+                <div class="spinner"></div>
+              {{/if}}
+           </ul>
+          </li>
+        </ul>
+      {{/view}}
+    {{/if}}
+  </div>
+
+{{#if App.isAdmin}}
+<div class="service-button">
+  {{#if view.isMaintenanceActive}}
+    <div class="btn-group display-inline-block">
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        {{t services.service.actions.serviceActions}}
+        <span class="caret"></span>
+      </a>
+      <ul class="pull-right dropdown-menu">
+        <!-- dropdown menu links -->
+
+        <!-- Start/Stop service actions -->
+        {{#unless controller.content.isClientsOnly}}
+          <li {{bindAttr class="controller.isStartDisabled:disabled"}}>
+            <a href="javascript:void(null)" {{bindAttr class="controller.isStartDisabled:disabled" }}
+              {{action "startService" target="controller"}}>
+              <i {{bindAttr class=":icon-play controller.isStartDisabled:disabled:enabled" }}></i>
+              {{t services.service.start}}
+            </a>
+          </li>
+          <li {{bindAttr class="controller.isStopDisabled:disabled"}}>
+            <a href="javascript:void(null)" {{bindAttr class="controller.isStopDisabled:disabled" }}
+              data-toggle="modal" {{action "stopService" target="controller"}}>
+              <i {{bindAttr class=":icon-stop controller.isStopDisabled:disabled:enabled" }}></i>
+              {{t services.service.stop}}
+            </a>
+          </li>
+        {{/unless}}
+
+        <!-- Other service actions -->
+        {{#each option in view.maintenance}}
+        <li {{bindAttr class="option.disabled:disabled"}}>
+          <a {{action "doAction" option target="controller" href=true}}><i {{bindAttr class="option.cssClass"}}></i>
+{{option.label}}</a>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+</div>
+{{/if}}
+{{outlet}}

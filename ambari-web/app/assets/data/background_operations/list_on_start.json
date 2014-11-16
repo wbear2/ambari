@@ -1,0 +1,37 @@
+{
+  "href" : "http://192.168.56.101:8080/api/v1/clusters/perf/requests?to=end&page_size=10&fields=Requests",
+  "items" : [
+    {
+      "href" : "http://192.168.56.101:8080/api/v1/clusters/perf/requests/12",
+      "Requests" : {
+        "aborted_task_count" : 0,
+        "cluster_name" : "perf",
+        "completed_task_count" : 4,
+        "failed_task_count" : 0,
+        "id" : 12,
+        "progress_percent" : 100.0,
+        "queued_task_count" : 0,
+        "request_context" : "Start YARN",
+        "request_status" : "COMPLETED",
+        "task_count" : 4,
+        "timed_out_task_count" : 0
+      }
+    },
+    {
+      "href" : "http://192.168.56.101:8080/api/v1/clusters/perf/requests/13",
+      "Requests" : {
+        "aborted_task_count" : 0,
+        "cluster_name" : "perf",
+        "completed_task_count" : 0,
+        "failed_task_count" : 0,
+        "id" : 13,
+        "progress_percent" : 9.0,
+        "queued_task_count" : 2,
+        "request_context" : "Stop YARN",
+        "request_status" : "PENDING",
+        "task_count" : 2,
+        "timed_out_task_count" : 0
+      }
+    }
+  ]
+}

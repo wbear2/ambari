@@ -1,0 +1,199 @@
+{{!
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+}}
+
+<div class="row-fluid service-block">
+  <div class="span6">
+
+    <div class="box">
+      <div class="box-header">
+        <h4>{{controller.content.label}} {{t services.service.info.menu.summary}}</h4>
+      </div>
+      <div class="service-content">
+        <table id="summary-info" class="table no-borders table-condensed">
+          <tbody>
+            {{#if view.noTemplateService}}
+              {{view view.sumMasterComponentView}}
+            {{/if}}
+            {{#if view.serviceStatus.hdfs}}
+              {{view App.MainDashboardServiceHdfsView serviceBinding="view.service"}}
+            {{/if}}
+            {{#if view.serviceStatus.mapreduce}}
+              {{view App.MainDashboardServiceMapreduceView serviceBinding="view.service"}}
+            {{/if}}
+            {{#if view.serviceStatus.yarn}}
+              {{view App.MainDashboardServiceYARNView serviceBinding="view.service"}}
+            {{/if}}
+            {{#if view.serviceStatus.mapreduce2}}
+              {{template "templates/main/service/info/summary/mapreduce2"}}
+            {{/if}}
+            {{#if view.serviceStatus.hbase}}
+              {{view App.MainDashboardServiceHbaseView serviceBinding="view.service"}}
+            {{/if}}
+            {{#if view.serviceStatus.zookeeper}}
+              {{template "templates/main/service/info/summary/zookeeper"}}
+            {{/if}}
+            {{#if view.serviceStatus.oozie}}
+              {{template "templates/main/service/info/summary/oozie"}}
+            {{/if}}
+            {{#if view.serviceStatus.ganglia}}
+              {{template "templates/main/service/info/summary/ganglia"}}
+            {{/if}}
+            {{#if view.serviceStatus.hive}}
+              {{template "templates/main/service/info/summary/hive"}}
+            {{/if}}
+            {{#if view.serviceStatus.hue}}
+              {{template "templates/main/service/info/summary/hue"}}
+            {{/if}}
+            {{#if view.serviceStatus.flume}}
+              <tr>
+                <td>
+                  {{view App.MainDashboardServiceFlumeView serviceBinding="view.service"}}
+                </td>
+              </tr>
+            {{/if}}
+            {{#if view.serviceStatus.falcon}}
+              {{template "templates/main/service/info/summary/falcon"}}
+            {{/if}}
+            {{#if view.serviceStatus.storm}}
+              {{view App.MainDashboardServiceStormView serviceBinding="view.service"}}
+            {{/if}}
+            {{#if view.serviceStatus.tez}}
+              {{template "templates/main/service/info/summary/tez"}}
+            {{/if}}
+            {{#if view.serviceStatus.pig}}
+              {{template "templates/main/service/info/summary/pig"}}
+            {{/if}}
+            {{#if view.serviceStatus.glusterfs}}
+              {{template "templates/main/service/info/summary/glusterfs"}}
+            {{/if}}            
+            {{#if view.serviceStatus.sqoop}}
+              {{template "templates/main/service/info/summary/sqoop"}}
+            {{/if}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="span6">
+    {{#unless view.isNoAlertsService}}
+      <div class="box">
+        <div class="box-header">
+          <h4>{{t services.alerts.headingOfList}}</h4>
+          {{#if controller.isNagiosInstalled}}
+            <div class="btn-group">
+              {{#if App.router.clusterController.isNagiosUrlLoaded}}
+                <a class="btn" target="_blank" rel="tooltip" title="Go to Nagios" {{bindAttr href="controller.nagiosUrl"}}><i class="icon-link"></i></a>
+              {{else}}
+                <div class="spinner"></div>
+              {{/if}}
+            </div>
+          {{/if}}
+        </div>
+        <ul id='summary-alerts-list' class="alerts">
+          {{#if view.alertsController.isLoaded}}
+            {{#if view.alerts.length}}
+              {{#each view.alerts}}
+                {{view App.AlertItemView contentBinding="this"}}
+              {{/each}}
+            {{else}}
+              {{#if controller.isNagiosInstalled}}
+                <div class="alert alert-info">
+                  {{t services.service.info.summary.nagios.noAlerts}}
+                </div>
+              {{else}}
+                <div class="alert">
+                  {{t services.service.info.summary.nagios.alerts}}
+                </div>
+              {{/if}}
+            {{/if}}
+          {{else}}
+            <div class="spinner"></div>
+          {{/if}}
+        </ul>
+      </div>
+    {{/unless}}
+  </div>
+</div>
+
+{{#if view.collapsedSections}}
+  <div class="row-fluid">
+    <div class="span12 metrics-collapsed-graphs">
+      {{#each collapsedSection in view.collapsedSections}}
+        <div {{bindAttr class=":accordion collapsedSection.toggleIndex"}}>
+          <div class="accordion-group box">
+            <div class="accordion-heading box-header">
+              <span class="pull-left accordion-toggle" data-toggle="collapse" {{bindAttr dataParent="collapsedSection.toggleIndex" href="collapsedSection.toggleIndex"}}>
+                <i class="pull-left icon-caret-toggle"></i>
+                <span>{{collapsedSection.header}}</span>
+              </span>
+              <a class="btn pull-right" {{bindAttr href="collapsedSection.url"}} target="_blank">
+                <i class="icon-link"></i>
+              </a>
+              <div class="clearfix"></div>
+            </div>
+            <div class="accordion-body collapse in" {{bindAttr id="collapsedSection.id"}}>
+              <div class="accordion-inner">
+                {{#if collapsedSection.metricView}}
+                  {{view collapsedSection.metricView viewDataBinding="collapsedSection.metricViewData"}}
+                {{/if}}
+              </div>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+{{/if}}
+
+{{#if view.serviceMetricGraphs.length}}
+<div class="row-fluid">
+  <div class="span12">
+    <div class="box">
+      <div class="box-header">
+      <h4>{{controller.content.label}} {{t common.metrics}}</h4>
+        {{#if controller.isGangliaInstalled}}
+          <div class="btn-group">
+            {{#if App.router.clusterController.isGangliaUrlLoaded}}
+              <a class="btn" target="_blank" rel="tooltip" title="Go to Ganglia" {{bindAttr href="view.gangliaUrl"}}><i class="icon-link"></i></a>
+            {{else}}
+              <div class="spinner"></div>
+            {{/if}}
+          </div>
+        {{/if}}
+      </div>
+
+      <div class="">
+        <table class="graphs">
+          {{#each graphs in view.serviceMetricGraphs}}
+            <tr>
+              {{#each graph in graphs}}
+                <td>
+                  <div class="">
+                    {{view graph}}
+                  </div>
+                </td>
+              {{/each}}
+            </tr>
+          {{/each}}
+        </table>
+      </div>
+      
+    </div>
+  </div>
+</div>
+{{/if}}
