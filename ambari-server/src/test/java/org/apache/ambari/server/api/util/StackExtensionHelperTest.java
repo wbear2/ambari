@@ -49,6 +49,36 @@ public class StackExtensionHelperTest {
       bind(ActionMetadata.class);
     }
   }
+  
+  /**
+   * yuan
+   * Checks mongod service metainfo is parsed correctly
+   */
+  @Test
+  public void testPopulateServicesForStackAboutMongod() throws Exception {
+	  File stackRoot = new File(stackRootStr);
+	  StackInfo stackInfo = new StackInfo();
+	  stackInfo.setName("MONGODB");
+	  stackInfo.setVersion("2.6.5");
+	  StackExtensionHelper helper = new StackExtensionHelper(injector,stackRoot);
+	  helper.populateServicesForStack(stackInfo);
+	  List<ServiceInfo> services = stackInfo.getServices();
+	  assertEquals(1, services.size());
+	  for(ServiceInfo serviceInfo : services){
+		  if(serviceInfo.getName().equals("MONGOD")){
+			  assertEquals("MONGOD", serviceInfo.getName());
+			  assertEquals("2.0", serviceInfo.getSchemaVersion());
+			  
+			  List<ComponentInfo> components = serviceInfo.getComponents();
+			  for(ComponentInfo componentInfo : components){
+				  assertEquals("scripts/mongod.py",
+			                componentInfo.getCommandScript().getScript());
+			      assertEquals(CommandScriptDefinition.Type.PYTHON,
+			                componentInfo.getCommandScript().getScriptType());
+			  }
+		  }
+	  }
+  }
 
   /**
   * Checks than service metainfo is parsed correctly both for ver 1 services
@@ -63,7 +93,7 @@ public class StackExtensionHelperTest {
     StackExtensionHelper helper = new StackExtensionHelper(injector, stackRoot);
     helper.populateServicesForStack(stackInfo);
     List<ServiceInfo> services =  stackInfo.getServices();
-    assertEquals(8, services.size());
+    assertEquals(9, services.size());
     for (ServiceInfo serviceInfo : services) {
       if (serviceInfo.getName().equals("HIVE")) {
         // Check old-style service

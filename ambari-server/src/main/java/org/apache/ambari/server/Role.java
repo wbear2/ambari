@@ -104,7 +104,9 @@ public class Role {
   public static final Role FALCON_SERVICE_CHECK = valueOf("FALCON_SERVICE_CHECK");
   public static final Role STORM_SERVICE_CHECK = valueOf("STORM_SERVICE_CHECK");
   public static final Role YARN_CLIENT = valueOf("YARN_CLIENT");
-
+  //yuan
+  public static final Role MONGOD = valueOf("MONDOD");
+  
   private String name = null;
   
   private Role(String roleName) {

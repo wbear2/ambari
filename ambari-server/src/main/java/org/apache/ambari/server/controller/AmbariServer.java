@@ -570,6 +570,7 @@ public class AmbariServer {
       certMan.initRootCert();
       ComponentSSLConfiguration.instance().init(server.configs);
       if (server != null) {
+    	LOG.info("server run...");
         server.run();
       }
     } catch (Throwable t) {

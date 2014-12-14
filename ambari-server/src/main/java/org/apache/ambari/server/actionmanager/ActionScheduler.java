@@ -198,6 +198,10 @@ class ActionScheduler implements Runnable {
           runningRequestIds.add(requestIdStr);
           if (!requestsInProgress.contains(requestIdStr)) {
             requestsInProgress.add(requestIdStr);
+            /**
+             * yuan
+             * set request start time
+             */
             db.startRequest(requestId);
           }
         }

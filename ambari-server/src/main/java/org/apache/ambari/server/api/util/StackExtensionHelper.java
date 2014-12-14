@@ -373,6 +373,10 @@ public class StackExtensionHelper {
           ParserConfigurationException, SAXException,
           XPathExpressionException, IOException, JAXBException {
     List<ServiceInfo> services = new ArrayList<ServiceInfo>();
+    /**
+     * yuan
+     * "/var/lib/ambari-server/resources/stacks/HDP/2.0.6/services"
+     */
     File servicesFolder = new File(stackRoot.getAbsolutePath() + File
       .separator + stackInfo.getName() + File.separator + stackInfo.getVersion()
       + File.separator + AmbariMetaInfo.SERVICES_FOLDER_NAME);
@@ -567,6 +571,10 @@ public class StackExtensionHelper {
     stackInfo.setVersion(stackVersionFolder.getName());
 
     // Get metainfo from file
+    /**
+     * yuan
+     * "/var/lib/ambari-server/resources/stacks/HDP/2.0.6/metainfo.xml"
+     */    
     File stackMetainfoFile = new File(stackVersionFolder.getAbsolutePath()
         + File.separator + AmbariMetaInfo.STACK_METAINFO_FILE_NAME);
 
@@ -585,6 +593,10 @@ public class StackExtensionHelper {
       // Populating hooks dir for stack
       String hooksSubPath = stackInfo.getName() + File.separator +
               stackInfo.getVersion() + File.separator + HOOKS_FOLDER_NAME;
+      /**
+       * yuan
+       * "/var/lib/ambari-server/resources/stacks/HDP/2.0.6/hooks"
+       */
       String hooksAbsPath = stackVersionFolder.getAbsolutePath() +
               File.separator + HOOKS_FOLDER_NAME;
       if (new File(hooksAbsPath).exists()) {
@@ -594,7 +606,10 @@ public class StackExtensionHelper {
                 hooksAbsPath);
         LOG.debug(message);
       }
-
+      /**
+       * yuan
+       * "/var/lib/ambari-server/resources/stacks/HDP/2.0.6/role_command_order.json"
+       */
       String rcoFileLocation = stackVersionFolder.getAbsolutePath() +
               File.separator + AmbariMetaInfo.RCO_FILE_NAME;
       if (new File(rcoFileLocation).exists())

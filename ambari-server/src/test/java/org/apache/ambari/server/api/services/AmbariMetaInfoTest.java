@@ -83,6 +83,11 @@ public class AmbariMetaInfoTest {
   private static final String STACK_VERSION_HDP_02 = "0.2";
   private static final String STACK_MINIMAL_VERSION_HDP = "0.0";
   private static String SERVICE_NAME_HDFS = "HDFS";
+  //yuan
+  private static String SERVICE_NAME_MONGODB="MONGODB";
+  private static String SERVICE_COMPONENT_MONGOD = "MONGOD";
+  private static String STACK_VERSION_HDP_2 = "2.0.7";
+  
   private static String SERVICE_NAME_MAPRED2 = "MAPREDUCE2";
   private static String SERVICE_COMPONENT_NAME = "NAMENODE";
   private static final String OS_TYPE = "centos5";
@@ -372,6 +377,13 @@ public class AmbariMetaInfoTest {
       Assert.assertTrue(e instanceof StackAccessException);
     }
 
+  }
+  
+  @Test
+  public void testGetMongodComponet() throws Exception{
+	  ComponentInfo component = metaInfo.getComponent(STACK_NAME_HDP, 
+				STACK_VERSION_HDP_2, SERVICE_NAME_MONGODB, SERVICE_COMPONENT_MONGOD);
+	   Assert.assertEquals(component.getName(), SERVICE_COMPONENT_MONGOD);
   }
 
   @Test

@@ -143,7 +143,14 @@ public class AmbariMetaInfo {
    */
   @Inject
   public AmbariMetaInfo(Configuration conf) throws Exception {
-    String stackPath = conf.getMetadataPath();
+	/**
+	 * yuan
+	 * default values
+	 * stackPath="/var/lib/ambari-server/resources/stacks"
+	 * serverVersinFilePath="/var/lib/ambari-server/resources/version"
+	 * customActionDefinitionPath="/var/lib/ambari-server/resources/custom_action_definitions"
+	 */
+    String stackPath = conf.getMetadataPath(); 
     String serverVersionFilePath = conf.getServerVersionFilePath();
     this.stackRoot = new File(stackPath);
     this.serverVersionFile = new File(serverVersionFilePath);
@@ -791,7 +798,10 @@ public class AmbariMetaInfo {
       throw new AmbariException("Unable to find stack definitions under " +
         "stackRoot = " + stackRootAbsPath);
     }
-
+    /**
+     * yuan
+     * Why?
+     */
     ExecutorService es = Executors.newSingleThreadExecutor(new ThreadFactory() {
       @Override
       public Thread newThread(Runnable r) {
@@ -812,6 +822,10 @@ public class AmbariMetaInfo {
               stack.getName() + File.separator + stack.getVersion();
 
       // get repository data for current stack of techs
+      /**
+       * yuan
+       * "/var/lib/ambari-server/resources/HDP/2.0.6/repos/repoinfo.xml"
+       */
       File repositoryFolder = new File(stackPath
         + File.separator + REPOSITORY_FOLDER_NAME + File.separator
         + REPOSITORY_FILE_NAME);
