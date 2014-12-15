@@ -19,20 +19,21 @@ limitations under the License.
 
 from resource_management import *
 
-
 class Mongod(Script):
   def install(self, env):
     self.install_packages(env)
+    
+  def configure(self,env):
+    pass
 
   def start(self, env):
-    import params
-
-    env.set_params(params)
-    self.configure(env)
-    mongod(action="start")
+    pass
+    
+  def stop(self, env):
+    pass
+    
   def status(self, env):
-    pid_file=NULL
-    check_process_status(pid_file)
+    check_process_status()
 
 
 if __name__ == "__main__":

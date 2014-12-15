@@ -22,8 +22,8 @@
       <name>MONGODB</name>
       <comment>An open-source document database</comment>
       <version>2.6.5.2.0</version>
-      <components>
       
+      <components>
         <component>
           <name>MONGOD</name>
           <category>CLIENT</category>
@@ -34,8 +34,19 @@
             <timeout>600</timeout>
           </commandScript>
         </component>
-        
       </components>
+      
+      <osSpecifics>
+        <osSpecific>
+          <osFamily>any</osFamily>
+          <packages>
+            <package>
+              <name>mongo-10gen-server</name>
+            </package>
+          </packages>
+        </osSpecific>
+      </osSpecifics>
+      
     </service>
   </services>
 

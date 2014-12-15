@@ -22,5 +22,5 @@ from resource_management import *
 
 config = Script.get_config()
 
-zk_pid_dir = config['configurations']['global']['zk_pid_dir']
-zk_pid_file = format("{zk_pid_dir}/zookeeper_server.pid")
+mongodb_pid_dir = config['configurations']['global']['mongodb_pid_dir']
+mongodb_pid_file = format("{mongodb_pid_dir}/mongod.pid")
