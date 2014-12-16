@@ -222,3 +222,7 @@ class TestExecuteResource(TestCase):
       Execute(expected_command)
 
     self.assertEqual(popen_mock.call_args_list[0][0][0][3], expected_command)
+   
+  def test_zookeeper_command_format(self):
+      config_dir = "/etc/zookeeper/conf"
+      cmd = format("env ZOOCFGDIR={config_dir} ZOOCFG=zoo.cfg {zk_bin}/zkServer.sh")

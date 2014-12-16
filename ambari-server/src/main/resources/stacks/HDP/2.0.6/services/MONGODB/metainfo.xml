@@ -43,6 +43,9 @@
             <package>
               <name>mongo-10gen-server</name>
             </package>
+            <package>
+              <name>mongo-10gen</name>
+            </package>
           </packages>
         </osSpecific>
       </osSpecifics>
