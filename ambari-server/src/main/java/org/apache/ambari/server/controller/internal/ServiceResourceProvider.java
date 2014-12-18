@@ -611,6 +611,7 @@ public class ServiceResourceProvider extends AbstractControllerResourceProvider 
       State newState = null;
       if (request.getDesiredState() != null) {
         newState = State.valueOf(request.getDesiredState());
+        
         if (!newState.isValidDesiredState()) {
           throw new IllegalArgumentException("Invalid arguments, invalid"
               + " desired state, desiredState=" + newState);

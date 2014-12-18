@@ -26,8 +26,8 @@
       <components>
         <component>
           <name>MONGOD</name>
-          <category>CLIENT</category>
-          <cardinality>0+</cardinality>
+          <category>MASTER</category>
+          <cardinality>1</cardinality>
           <commandScript>
             <script>scripts/mongod.py</script>
             <scriptType>PYTHON</scriptType>

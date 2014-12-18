@@ -18,25 +18,15 @@ limitations under the License.
 """
 
 from resource_management import *
-from mongod_service import mongod_service
 
-class Mongod(Script):
-  def install(self, env):
-    self.install_packages(env)
-    
-  def configure(self,env):
-    pass
-
-  def start(self, env):
-    mongod_service(action = 'start')
-    
-  def stop(self, env):
-    mongod_service(action = 'stop')
-    
-  def status(self, env):
-    mongod_pid_file = "/var/run/mongodb/mongod.pid"
-    check_process_status(mongod_pid_file)
-
-
-if __name__ == "__main__":
-  Mongod().execute()
+def mongod_service(action='start'):
+  
+  cmd = "/var/lib/ambaari-agent/cache/stacks/HPD/2.0.6/services/MONGODB/package/files/mongod.sh"
+  
+  if action == 'start':
+    daemon_cmd = format("{cmd} start")
+    Execute(daemon_cmd)
+  elif action == 'stop':
+    daemon_cmd = format("{cmd} stop")
+    Execute(daemon_cmd)
+  
