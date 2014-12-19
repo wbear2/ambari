@@ -20,13 +20,11 @@ limitations under the License.
 from resource_management import *
 
 def mongod_service(action='start'):
-  
-  cmd = "/var/lib/ambaari-agent/cache/stacks/HPD/2.0.6/services/MONGODB/package/files/mongod.sh"
+  import params
   
   if action == 'start':
-    daemon_cmd = format("{cmd} start")
+    daemon_cmd = params.cmd + " start"
     Execute(daemon_cmd)
   elif action == 'stop':
-    daemon_cmd = format("{cmd} stop")
+    daemon_cmd = params.cmd + " stop"
     Execute(daemon_cmd)
-  

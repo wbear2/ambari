@@ -34,8 +34,9 @@ class Mongod(Script):
     mongod_service(action = 'stop')
     
   def status(self, env):
-    mongod_pid_file = "/var/run/mongodb/mongod.pid"
-    check_process_status(mongod_pid_file)
+    import params
+    
+    check_process_status(params.mongod_pid_file)
 
 
 if __name__ == "__main__":
